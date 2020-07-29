@@ -5,87 +5,13 @@
 </ion-header>
 
 <ion-content>
-
-  <ion-list>
-    <ion-radio-group [(ngModel)]="usersResponse">
-
-      <ion-list-header>
-        Today's Question
-      </ion-list-header>
-
-      <ion-item>
-        <ion-label>I like superheroes!!!</ion-label>
-        <ion-radio value="like">Yes</ion-radio>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>I do not like superheroes! :(</ion-label>
-        <ion-radio value="dislike">No</ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
-
-  <ion-card *ngIf="usersResponse == 'like'">
-    <ion-card-header *ngIf="true">
-      <ion-card-title>
-        Superheroes
-      </ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-list>
-        <ion-item [color]="getColor(superhero.strength)" *ngFor="let superhero of superheroes; let i=index">
-          <ion-avatar slot="start">
-            <ion-img [src]="'//api.adorable.io/avatars/' + superhero.id"></ion-img> 
-          </ion-avatar>
-          <ion-label>
-            <h3> #{{ i+1 }} {{ superhero.name }}  </h3>
-            <p>Strength: {{ superhero.strength }} </p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-
-    <ion-card-footer>
-
-      <ion-list>
-        <ion-item>
-          <ion-label>ID</ion-label>
-          <ion-input type="number" [(ngModel)]="id"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Name</ion-label>
-          <ion-input type="text" [(ngModel)]="name"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Strength</ion-label>
-          <ion-select [(ngModel)]="strength">
-            <ion-select-option value="10">Super Weak</ion-select-option>
-            <ion-select-option value="20">Weak</ion-select-option>
-            <ion-select-option value="30">Okay-ish</ion-select-option>
-            <ion-select-option value="40">Moderate</ion-select-option>
-            <ion-select-option value="50">Strong</ion-select-option>
-            <ion-select-option value="70">Super Strong</ion-select-option>
-            <ion-select-option value="90">Beast</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>I accept the superhero terms and conditions</ion-label>
-          <ion-checkbox slot="start" [(ngModel)]="terms"></ion-checkbox>
-        </ion-item>
-
-        
-
-        <ion-row>
-          <ion-col><ion-button expand="block" color="success" (click)="addSuperhero(terms, id, name, strength)">Add Superhero</ion-button></ion-col>
-        </ion-row>
-
-        
-      </ion-list>
-    </ion-card-footer>
-  </ion-card>
-
   
+  <ion-button (click)="showLoading()" color="danger" expand="block">Show Loading</ion-button>
+
+  <ion-button (click)="showToast()" color="danger" expand="block">Show Toast</ion-button>
+
+  <ion-button (click)="showAlert()" color="danger" expand="block">Show Alert</ion-button>
+
+  <ion-button (click)="showActionsheet()" color="danger" expand="block">Show Actionsheet</ion-button>
   
 </ion-content>
