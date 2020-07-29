@@ -5,13 +5,20 @@
 </ion-header>
 
 <ion-content>
-  
-  <ion-button (click)="showLoading()" color="danger" expand="block">Show Loading</ion-button>
 
-  <ion-button (click)="showToast()" color="danger" expand="block">Show Toast</ion-button>
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-  <ion-button (click)="showAlert()" color="danger" expand="block">Show Alert</ion-button>
-
-  <ion-button (click)="showActionsheet()" color="danger" expand="block">Show Actionsheet</ion-button>
-  
+  <ion-list>
+    <ion-item *ngFor="let person of people">
+      <ion-avatar slot="start">
+        <ion-img [src]="person.picture"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <h3>{{person.name}}</h3>
+        <p>{{person.email}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
