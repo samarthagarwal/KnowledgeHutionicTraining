@@ -11,7 +11,9 @@
   </ion-refresher>
 
   <ion-list>
-    <ion-item *ngFor="let person of people">
+    <ion-item *ngFor="let person of people" detail="true" 
+      [routerLink]="'/detail/' + person.id" routerDirection="forward"
+    >
       <ion-avatar slot="start">
         <ion-img [src]="person.picture"></ion-img>
       </ion-avatar>
@@ -21,4 +23,9 @@
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>
