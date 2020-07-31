@@ -10,6 +10,7 @@ import { Router } from "@angular/router";
 import { PeopleService } from "../people.service";
 import { DetailPage } from "../detail/detail.page";
 import { OverflowMenuPage } from "../overflow-menu/overflow-menu.page";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -33,6 +34,48 @@ export class HomePage {
   ) {
     this.people = this.peopleService.people;
     this.peopleBackup = this.people;
+
+    // console.log("Before executing...");
+    // this.myFunction().then((num) => {
+    //   console.log("Resolved with " + num);
+    // }).catch((ex) => {
+    //   console.log("Rejected with " + ex);
+    // }).finally(() => {
+    //   console.log("After execution...");
+    // });
+
+    console.log("Before execution...");
+
+    this.myObservableFunction()
+      .toPromise()
+      .then((value) => {
+        console.log(value);
+      });
+
+    console.log("After execution...");
+  }
+
+  // myFunction(): Promise<number> {
+  //   return new Promise<number>((resolve, reject) => {
+  //     setTimeout(() => {
+  //       reject(1907);
+  //     }, 2000);
+  //   });
+  // }
+
+  myObservableFunction(): Observable<number> {
+    return new Observable<number>((observer) => {
+      let num = 1;
+
+      setInterval(() => {
+        if (num > 100) {
+          observer.complete();
+        }
+
+        observer.next(num);
+        num = num + num;
+      }, 1000);
+    });
   }
 
   refresh(ev) {
