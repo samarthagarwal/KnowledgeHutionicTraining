@@ -2,14 +2,14 @@
   <ion-toolbar>
 
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <!-- <ion-back-button defaultHref="/home"></ion-back-button> -->
     </ion-buttons>
 
     <ion-title>{{person.name}}'s Details</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button fill="clear" color="danger" routerLink="/home" routerDirection="back">
-        Back
+      <ion-button fill="clear" color="danger" (click)="close()">
+        Close
       </ion-button>
     </ion-buttons>
 
@@ -32,11 +32,11 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-item>
+      <ion-item (click)="close(person.email)">
         <ion-icon slot="start" name="mail"></ion-icon>
         <ion-label> {{ person.email }} </ion-label>
       </ion-item>
-      <ion-item>
+      <ion-item (click)="close(person.gender)">
         <ion-icon slot="start" [name]="person.gender == 'male'? 'man' : 'woman'"></ion-icon>
         <ion-label class="ion-text-capitalize"> {{ person.gender }} </ion-label>
       </ion-item>

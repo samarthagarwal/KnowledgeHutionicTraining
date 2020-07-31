@@ -1,7 +1,15 @@
 import { Component, ViewChild } from "@angular/core";
-import { ToastController, IonInfiniteScroll } from "@ionic/angular";
-import { Router } from '@angular/router';
-import { PeopleService } from '../people.service';
+import {
+  ToastController,
+  IonInfiniteScroll,
+  ModalController,
+  IonRouterOutlet,
+  PopoverController,
+} from "@ionic/angular";
+import { Router } from "@angular/router";
+import { PeopleService } from "../people.service";
+import { DetailPage } from "../detail/detail.page";
+import { OverflowMenuPage } from "../overflow-menu/overflow-menu.page";
 
 @Component({
   selector: "app-home",
@@ -15,8 +23,14 @@ export class HomePage {
 
   peopleBackup: any[];
 
-  constructor(private toastCtrl: ToastController, private router: Router, private peopleService: PeopleService) {
-
+  constructor(
+    private toastCtrl: ToastController,
+    private router: Router,
+    private peopleService: PeopleService,
+    private modalCtrl: ModalController,
+    private routerOutlet: IonRouterOutlet,
+    private popoverController: PopoverController
+  ) {
     this.people = this.peopleService.people;
     this.peopleBackup = this.people;
   }
@@ -53,9 +67,35 @@ export class HomePage {
     }, 2000);
   }
 
-  navigateToDetail(person: any) {
+  async navigateToDetail(person: any) {
+    // this.router.navigate(['/detail','123'])
 
-    this.router.navigate(['/detail','123'])
+    let modal = await this.modalCtrl.create({
+      component: DetailPage,
+      componentProps: {
+        id: person.id,
+      },
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+    });
 
+    modal.onDidDismiss().then((response) => {
+      console.log(response.data);
+    });
+
+    modal.present();
+  }
+
+  async showPopover(ev) {
+    let popover = await this.popoverController.create({
+      component: OverflowMenuPage,
+      event: ev,
+    });
+
+    popover.onDidDismiss().then((response) => {
+      console.log(response.data);
+    });
+
+    popover.present();
   }
 }
