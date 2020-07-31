@@ -5,6 +5,7 @@ import {
   ModalController,
   IonRouterOutlet,
   PopoverController,
+  LoadingController,
 } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { PeopleService } from "../people.service";
@@ -26,56 +27,33 @@ export class HomePage {
 
   constructor(
     private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
     private router: Router,
     private peopleService: PeopleService,
     private modalCtrl: ModalController,
     private routerOutlet: IonRouterOutlet,
     private popoverController: PopoverController
   ) {
-    this.people = this.peopleService.people;
-    this.peopleBackup = this.people;
 
-    // console.log("Before executing...");
-    // this.myFunction().then((num) => {
-    //   console.log("Resolved with " + num);
-    // }).catch((ex) => {
-    //   console.log("Rejected with " + ex);
-    // }).finally(() => {
-    //   console.log("After execution...");
-    // });
+    this.getPeople()
 
-    console.log("Before execution...");
-
-    this.myObservableFunction()
-      .toPromise()
-      .then((value) => {
-        console.log(value);
-      });
-
-    console.log("After execution...");
+    
   }
 
-  // myFunction(): Promise<number> {
-  //   return new Promise<number>((resolve, reject) => {
-  //     setTimeout(() => {
-  //       reject(1907);
-  //     }, 2000);
-  //   });
-  // }
+  async getPeople() {
 
-  myObservableFunction(): Observable<number> {
-    return new Observable<number>((observer) => {
-      let num = 1;
-
-      setInterval(() => {
-        if (num > 100) {
-          observer.complete();
-        }
-
-        observer.next(num);
-        num = num + num;
-      }, 1000);
+    let loading = await this.loadingCtrl.create({
+      message: "Loading, please wait",
+      spinner: "dots"
     });
+
+    await loading.present();
+
+    this.peopleService.getPeople().then((data) => {
+      this.people = data;
+      this.peopleBackup = this.people;
+      loading.dismiss();
+    })
   }
 
   refresh(ev) {
